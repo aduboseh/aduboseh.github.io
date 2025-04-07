@@ -1,44 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ElevenLabs Agent</title>
   <style>
     body {
-      font-family: sans-serif;
+      font-family: Arial, sans-serif;
       text-align: center;
-      padding: 50px;
-      background-color: #f6f9fc;
+      padding: 60px;
+      background-color: #f5f5f5;
+    }
+    h1 {
+      color: #333;
     }
     button {
-      padding: 12px 24px;
-      font-size: 16px;
-      border-radius: 8px;
+      padding: 14px 28px;
+      font-size: 18px;
+      border-radius: 10px;
       border: none;
-      background-color: #4f46e5;
+      background-color: #0051ff;
       color: white;
       cursor: pointer;
-      margin-top: 30px;
+      margin-top: 40px;
     }
-    button:hover {
-      background-color: #4338ca;
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
     }
   </style>
 </head>
 <body>
-  <h1>Talk to My ElevenLabs Agent</h1>
-  
+  <h1>Welcome to My ElevenLabs Agent</h1>
+
   <elevenlabs-convai
     id="convai-widget"
     agent-id="Yx3iOWI38ATBcVrc5Hon"
     context='{"child_name": "Aris"}'>
   </elevenlabs-convai>
 
-  <button onclick="startConversation()">🎙️ Start Talking</button>
+  <button id="startButton" onclick="startConversation()" disabled>🎙️ Start Talking</button>
 
   <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
   <script>
+    let checkReady = setInterval(() => {
+      const widget = document.getElementById("convai-widget");
+      if (widget && widget.start) {
+        document.getElementById("startButton").disabled = false;
+        clearInterval(checkReady);
+      }
+    }, 500);
+
     function startConversation() {
       const widget = document.getElementById("convai-widget");
       if (widget && widget.start) {
